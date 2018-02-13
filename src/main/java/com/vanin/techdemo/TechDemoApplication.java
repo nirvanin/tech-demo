@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @SpringBootApplication
 @Controller
@@ -30,12 +28,12 @@ public class TechDemoApplication {
 	@RequestMapping("/")
 	@ResponseBody
 	@Transactional(readOnly = true)
-	String getDisk() {
+	ModelAndView getDisk() {
+		String diskName = "";
 		if (null != diskService.getDisk("Sergey")) {
-			return diskService.getDisk("Sergey").getName();
-		} else {
-			return "";
+			diskName = diskService.getDisk("Sergey").getName();
 		}
+		return new ModelAndView("disks/search", "found", diskName);
 	}
 
 	@RequestMapping("/createDisk")
