@@ -29,7 +29,7 @@ public class TechDemoApplication {
 	@ResponseBody
 	@Transactional(readOnly = true)
 	ModelAndView getDisk() {
-		String diskName = "";
+		String diskName = null;
 		if (null != diskService.getDisk("Sergey")) {
 			diskName = diskService.getDisk("Sergey").getName();
 		}
